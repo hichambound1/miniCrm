@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class EntrepriseController extends Controller
 {
+    public function getEntreprises()
+    {
+        $entreprises= Entreprise::paginate();
+        return response()->json([
+            'entreprises' => $entreprises,
+            'status'  => 200,
+        ]);
+    }
     public function createEntreprise(StoreEntrepriseRequest $request)
     {
         $this->authorize('create_entreprise');
@@ -38,7 +46,7 @@ class EntrepriseController extends Controller
     {
         $this->authorize('delete_entreprise');
         $entreprise= Entreprise::whereId($request->id)->with('users')->first();
-       
+
         if(count($entreprise->users) === 0){
             $entreprise->delete();
             return response()->json([
