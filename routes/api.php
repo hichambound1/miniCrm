@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\V1\Auth\AdminController;
+use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\Auth\AuthController;
+use App\Http\Controllers\V1\EntrepriseController;
 use App\Http\Middleware\CheckRoleAdminMiddleware;
 use App\Http\Middleware\CheckRoleEmployeMiddleware;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +24,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware([CheckRoleAdminMiddleware::class])->group(function () {
         Route::post('/createAdmin', [AdminController::class, 'createAdmin']);
+        Route::post('/createEntreprise', [EntrepriseController::class, 'createEntreprise']);
+        Route::put('/editEntreprise', [EntrepriseController::class, 'editEntreprise']);
 
     });
     Route::middleware([CheckRoleEmployeMiddleware::class])->group(function () {
