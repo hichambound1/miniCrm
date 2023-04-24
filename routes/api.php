@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/createAdmin', [AdminController::class, 'createAdmin']);
         Route::post('/createEntreprise', [EntrepriseController::class, 'createEntreprise']);
         Route::put('/editEntreprise', [EntrepriseController::class, 'editEntreprise']);
+        Route::delete('/deleteEntreprise', [EntrepriseController::class, 'deleteEntreprise']);
 
     });
     Route::middleware([CheckRoleEmployeMiddleware::class])->group(function () {
