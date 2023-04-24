@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\V1\Auth\AuthController;
+use App\Http\Middleware\CheckRoleAdminMiddleware;
+use App\Http\Middleware\CheckRoleEmployeMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +20,12 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::middleware([CheckRoleAdminMiddleware::class])->group(function () {
+
+    });
+    Route::middleware([CheckRoleEmployeMiddleware::class])->group(function () {
+
+    });
 
 });
