@@ -9,6 +9,6 @@ class Invitation extends Model
 {
     use HasFactory;
     protected $fillable=[
-        "entreprise_id","employe_id","status_id"
+        "entreprise_id","user_id","status_id"
     ];
 }
