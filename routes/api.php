@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\AdminController;
 use App\Http\Controllers\V1\Auth\AuthController;
+use App\Http\Controllers\V1\EmployeController;
 use App\Http\Controllers\V1\EntrepriseController;
 use App\Http\Controllers\V1\InvitationController;
 use App\Http\Middleware\CheckRoleAdminMiddleware;
@@ -25,7 +26,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware([CheckRoleAdminMiddleware::class])->group(function () {
         Route::post('/createAdmin', [AdminController::class, 'createAdmin']);
-        
+
+        Route::get('/ListOfEmployes', [EmployeController::class, 'ListOfEmployes']);
         Route::post('/createEntreprise', [EntrepriseController::class, 'createEntreprise']);
         Route::put('/editEntreprise', [EntrepriseController::class, 'editEntreprise']);
         Route::delete('/deleteEntreprise', [EntrepriseController::class, 'deleteEntreprise']);
