@@ -11,13 +11,17 @@ use Illuminate\Http\Request;
 
 class EntrepriseController extends Controller
 {
-    public function getEntreprises()
+    public function getEntreprises(Request $request)
     {
-        $entreprises= Entreprise::paginate();
-        return response()->json([
-            'entreprises' => $entreprises,
-            'status'  => 200,
-        ]);
+        $entreprises= Entreprise::when(isset($request->name), function ($q) use($request){
+            $q->where('name','like', '%'.$request->name.'%');
+        })
+        ->when(isset($request->sort), function ($q) use($request){
+            $q->orderBy('name',$request->sort);
+        })
+        ->paginate();
+
+        return response($entreprises,200);
     }
     public function createEntreprise(StoreEntrepriseRequest $request)
     {
