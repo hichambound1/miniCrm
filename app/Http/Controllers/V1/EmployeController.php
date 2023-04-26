@@ -19,11 +19,8 @@ class EmployeController extends Controller
         ->when(isset($request->sort), function ($q) use($request){
             $q->orderBy('name',$request->sort);
         })
-        ->get();
+        ->paginate();
 
-        return response()->json([
-            'data' => $employes,
-            'status'  => 200,
-        ]);
+        return response($employes,200);
     }
 }
