@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('/getEntreprises', [EntrepriseController::class, 'getEntreprises']);
         Route::post('/sendInvitation', [InvitationController::class, 'sendInvitation']);
+        Route::get('/MyInvitations', [InvitationController::class, 'MyInvitations']);
+        Route::put('/cancel/invitation/{id}', [InvitationController::class, 'cancelInvitation']);
 
     });
     Route::middleware([CheckRoleEmployeMiddleware::class])->group(function () {

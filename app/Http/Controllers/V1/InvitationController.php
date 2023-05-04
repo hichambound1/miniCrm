@@ -38,10 +38,24 @@ class InvitationController extends Controller
 
         $data = ['name' => $request->name,'company'=>$company->name, 'email' => $request->email,"password"=>$password];
         dispatch(new SendEmailJob($request->email,$data));
-        return response()->json([
-            'data' => $invitation,
-            'status'  => 200,
-        ]);
+        return response($invitation, 200);
 
+    }
+    public function MyInvitations()
+    {
+        $user=auth()->user();
+        $invitations = Invitation::where('user_id',$user->id)->get();
+        return response( $invitations,200);
+    }
+    public function cancelInvitation($id)
+    {
+        $invitation= Invitation::whereId($id)->first();
+        if(isset($invitation)){
+            $statu_invitation_cancel=InvitationStatu::whereName('annuler')->first();
+            $invitation->update(["status_id"=>$statu_invitation_cancel->id]);
+            return response("Invitation updated",200);
+        }else{
+            return response("Invitation not found",404);
+        }
     }
 }
