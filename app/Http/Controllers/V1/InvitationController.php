@@ -49,8 +49,11 @@ class InvitationController extends Controller
     }
     public function cancelInvitation($id)
     {
-        $invitation= Invitation::whereId($id)->first();
+        $invitation= Invitation::with("statu")->whereId($id)->first();
         if(isset($invitation)){
+            if($invitation->statu->name==='confirmé'){
+                return response("this invitation it's already confirmed",412);
+            }
             $statu_invitation_cancel=InvitationStatu::whereName('annuler')->first();
             $invitation->update(["status_id"=>$statu_invitation_cancel->id]);
             return response("Invitation updated",200);

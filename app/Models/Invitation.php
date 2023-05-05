@@ -11,4 +11,8 @@ class Invitation extends Model
     protected $fillable=[
         "entreprise_id","user_id","status_id"
     ];
+    public function statu()
+    {
+        return $this->belongsTo(InvitationStatu::class,"status_id");
+    }
 }
