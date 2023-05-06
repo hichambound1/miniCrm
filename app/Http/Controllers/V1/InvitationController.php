@@ -29,6 +29,7 @@ class InvitationController extends Controller
             "status_id"=>$employe_status->id,
             "entreprise_id"=>$company->id
         ]);
+        $employe->assignRole('employe');
         $invitation_statu= InvitationStatu::whereName("En cours")->first();
         $invitation= Invitation::create([
             "entreprise_id"=>$request->entreprise_id,

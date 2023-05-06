@@ -5,6 +5,7 @@ use App\Http\Controllers\V1\Auth\AuthController;
 use App\Http\Controllers\V1\EmployeController;
 use App\Http\Controllers\V1\EntrepriseController;
 use App\Http\Controllers\V1\InvitationController;
+use App\Http\Middleware\CheckIfEmployeeIsConfirmed;
 use App\Http\Middleware\CheckRoleAdminMiddleware;
 use App\Http\Middleware\CheckRoleEmployeMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
     Route::middleware([CheckRoleEmployeMiddleware::class])->group(function () {
-
+        Route::put('/edit/myAccount', [EmployeController::class, 'editMyAccount']);
+        Route::middleware([CheckIfEmployeeIsConfirmed::class])->group(function () {
+            Route::get('myCompanyInfo', [EmployeController::class, 'myCompanyInfo']);
+            Route::get('mycolleaguesInfo', [EmployeController::class, 'mycolleaguesInfo']);
+            Route::get('myInfo', [EmployeController::class, 'myInfo']);
+        });
     });
 
 });
